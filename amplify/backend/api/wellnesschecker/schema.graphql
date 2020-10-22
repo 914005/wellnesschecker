@@ -1,0 +1,44 @@
+type Family @model{
+  id: ID!
+  name: String!
+  members: [Person] @connection(name: "familyMembers")
+}
+
+type Person @model{
+  id: ID!
+  personType: PersonType!
+  isStaff: Boolean
+  isSurrogateStaff: Boolean
+  isExempt: Boolean
+  email: String
+  firstName: String!
+  lastName: String!
+  gradeLevel: String
+  teacher: String
+  family: Family @connection(name: "familyMembers")
+  wellnessChecks: [WellnessCheck] @connection(name: "personWellnessChecks")
+}
+
+enum PersonType {
+  parent
+  student
+}
+
+type WellnessCheck @model{
+  id: ID!
+  submissionDate: AWSDate!
+  person: Person! @connection(name: "personWellnessChecks")
+  symptomFever: String
+  symptomSoreThroat: String
+  symptomNewCough: String
+  symptomShortnessOfBreath: String
+  symptomMuscleAche: String
+  symptomDiarrhea: String
+  symptomHeadache: String
+  symptomLossOfTasteOrSmell: String
+  symptomCongestion: String
+  symptomFatigue: String
+  exposureCloseContact: String
+  exposureRecentTravel: String
+  notes: String
+}
